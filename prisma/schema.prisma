@@ -1,0 +1,146 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URI")
+}
+
+model Student {
+    name          String
+    rollNo        String @id @unique
+    gender        Gender
+    profilePicUrl String @unique
+
+    dateOfBirth DateTime
+    phoneNumber String   @unique
+    email       String   @unique
+    category    Category
+
+    permanentAddress String
+    currentAddress   String
+    city             String
+    state            String
+    pincode          String
+    country          String
+
+    universityRegistrationNumber String   @unique
+    admissionNumber              String?  @unique
+    universityName               String
+    universityEmail              String   @unique
+    universityEmailPassword      String
+    group                        String
+    batchYear                    String
+    courseName                   String
+    hostelFacility               Boolean
+    dateOfAdmission              DateTime
+    receiptNumber                String?
+
+    tenthBoardName     String
+    tenthMaxMarks      Int    @db.SmallInt
+    tenthObtainedMarks Int    @db.SmallInt
+    tenthpercentage    Float
+    tenthSchoolName    String
+
+    twelthBoardName     String
+    twelthMaxMarks      Int    @db.SmallInt
+    twelthObtainedMarks Int    @db.SmallInt
+    twelthpercentage    Float
+    twelthSchoolName    String
+
+    fatherName        String
+    fatherOccupation  String
+    fatherPhoneNumber String
+    fatherEmail       String
+
+    motherName        String
+    motherOccupation  String?
+    motherPhoneNumber String
+    motherEmail       String?
+
+    guardianName        String?
+    guardianOccupation  String?
+    guardianPhoneNumber String?
+    guardianEmail       String?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+enum Country {
+    IN
+}
+
+model Teacher {
+    id String @id @default(uuid())
+
+    name          String
+    gender        Gender
+    profilePicUrl String @unique
+
+    dateOfBirth DateTime
+    phoneNumber String   @unique
+    email       String   @unique
+    category    Category
+    password    String
+
+    permanentAddress String
+    currentAddress   String
+    city             String
+    state            String
+    pincode          String
+    country          String
+
+    universityEmail         String @unique
+    universityEmailPassword String
+    department              String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Admin {
+    id String @id @default(uuid())
+
+    name          String
+    gender        Gender
+    profilePicUrl String @unique
+
+    dateOfBirth DateTime
+    phoneNumber String   @unique
+    email       String   @unique
+    category    Category
+    password    String
+
+    permanentAddress String
+    currentAddress   String
+    city             String
+    state            String
+    pincode          String
+    country          String
+
+    universityEmail         String @unique
+    universityEmailPassword String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+enum Gender {
+    MALE
+    FEMALE
+}
+
+enum Category {
+    GENERAL
+    OBC
+    SC
+    ST
+}

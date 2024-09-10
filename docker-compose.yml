@@ -1,0 +1,27 @@
+services:
+    postgres:
+        build:
+            dockerfile: ./test/docker/db.Dockerfile
+            args:
+                - POSTGRES_USER
+                - POSTGRES_PASSWORD
+                - PGDATA
+        ports:
+            - 3101:5432
+        volumes:
+            - postgres:/var/lib/postgresql/data
+
+    # This section is deprecated due to not being functional as of now.
+    # pgadmin4:
+    #     image: dpage/pgadmin4:latest
+    #     ports:
+    #         - 3100:80
+    #     env_file: ".env.development"
+    #     volumes:
+    #         - pgadmin:/var/lib/pgadmin
+    #     depends_on:
+    #         - postgres
+
+volumes:
+    postgres:
+    # pgadmin:
