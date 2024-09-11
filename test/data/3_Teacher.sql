@@ -56,6 +56,7 @@ INSERT INTO
         "country",
         "universityEmail",
         "universityEmailPassword",
+        "department",
         "createdAt",
         "updatedAt"
     )
@@ -78,6 +79,7 @@ VALUES
         'IN',
         '7+@triplex.com',
         'nQ7=Q*~UST',
+        'Mathematics',
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
     );
@@ -102,6 +104,7 @@ INSERT INTO
         "country",
         "universityEmail",
         "universityEmailPassword",
+        "department",
         "createdAt",
         "updatedAt"
     )
@@ -124,6 +127,7 @@ VALUES
         'IN',
         'h+@triplex.com',
         'fX3$7)EC',
+        'Physics',
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
     );
@@ -148,6 +152,7 @@ INSERT INTO
         "country",
         "universityEmail",
         "universityEmailPassword",
+        "department",
         "createdAt",
         "updatedAt"
     )
@@ -170,6 +175,7 @@ VALUES
         'IN',
         '6+@triplex.com',
         'pO9%''z+*?''''',
+        'Chemistry',
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
     );
@@ -194,6 +200,7 @@ INSERT INTO
         "country",
         "universityEmail",
         "universityEmailPassword",
+        "department",
         "createdAt",
         "updatedAt"
     )
@@ -214,8 +221,9 @@ VALUES
         'Punjab',
         '416278',
         'IN',
-        't+@triplex.com',
+        'tx+@triplex.com',
         'pO6|i>u{R%',
+        'Biology',
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
     );
@@ -240,6 +248,7 @@ INSERT INTO
         "country",
         "universityEmail",
         "universityEmailPassword",
+        "department",
         "createdAt",
         "updatedAt"
     )
@@ -262,6 +271,7 @@ VALUES
         'IN',
         'i+@triplex.com',
         'nW6~xed/',
+        'Computer Science',
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
     );
@@ -286,6 +296,7 @@ INSERT INTO
         "country",
         "universityEmail",
         "universityEmailPassword",
+        "department",
         "createdAt",
         "updatedAt"
     )
@@ -308,6 +319,7 @@ VALUES
         'IN',
         'S+@triplex.com',
         'tH9_DNO\xr2\5KZu',
+        'History',
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
     );
@@ -332,28 +344,30 @@ INSERT INTO
         "country",
         "universityEmail",
         "universityEmailPassword",
+        "department",
         "createdAt",
         "updatedAt"
     )
 VALUES
     (
         gen_random_uuid (),
-        'Jennette Boak',
+        'Maiga Beverley',
         'FEMALE',
-        'https://images.unsplash.com/photo-1722234629410-7ca203bf7594?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MjIyMzh8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MjQ5MjE3NTB8&ixlib=rb-4.0.3&q=80&w=1080',
-        '2019-01-02 00:00:00',
-        '47426-07752',
-        'jboak7@slashdot.org',
-        'SC',
-        'vF8%l?6A9SZ"AWH',
-        '42758 Troy Avenue',
-        '670 Darwin Drive',
-        'Ahmedabad',
-        'West Bengal',
-        '253513',
+        'https://images.unsplash.com/photo-1722236479148-9dca1db69b72?ixid=M3w1MjIyMzh8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MjQ5MjE3NTB8&ixlib=rb-4.0.3',
+        '1927-06-21 00:00:00',
+        '38629-48255',
+        'mbeverley7@amazon.co.uk',
+        'GENERAL',
+        'uK7)z~BF',
+        '5 7th Junction',
+        '1 Delaware Circle',
+        'New Delhi',
+        'Jharkhand',
+        '238203',
         'IN',
-        '5+@triplex.com',
-        'xM6<|rX~c',
+        'p+@triplex.com',
+        'yR7_TF/$b+7',
+        'Literature',
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
     );
@@ -378,28 +392,30 @@ INSERT INTO
         "country",
         "universityEmail",
         "universityEmailPassword",
+        "department",
         "createdAt",
         "updatedAt"
     )
 VALUES
     (
         gen_random_uuid (),
-        'Miles Ogilby',
-        'MALE',
-        'https://images.unsplash.com/photo-1722281688131-301061bc76fc?ixid=M3w1MjIyMzh8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MjQ5MjE3NTB8&ixlib=rb-4.0.3',
-        '1953-08-03 00:00:00',
-        '09387-34139',
-        'mogilby8@time.com',
-        'SC',
-        'mJ6"CNovoIA',
-        '71003 Jenna Avenue',
-        '242 Caliangt Crossing',
-        'Jaipur',
-        'Tamil Nadu',
-        '412300',
+        'Xever Jeannon',
+        'FEMALE',
+        'https://images.unsplash.com/photo-1722249484039-9a16226b6e98?ixid=M3w1MjIyMzh8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MjQ5MjE3NTB8&ixlib=rb-4.0.3',
+        '2015-02-06 00:00:00',
+        '84002-54001',
+        'xjeannon8@pagesperso-orange.fr',
+        'GENERAL',
+        'mR3''INEDVPCuvd',
+        '74 Holmberg Way',
+        '47347 Cottonwood Way',
+        'Lucknow',
+        'Gujarat',
+        '634819',
         'IN',
-        '10+@triplex.com',
-        'uT4.%u38i*l_4',
+        'o+@triplex.com',
+        'uP9$)HNQ',
+        'Philosophy',
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
     );
@@ -424,28 +440,30 @@ INSERT INTO
         "country",
         "universityEmail",
         "universityEmailPassword",
+        "department",
         "createdAt",
         "updatedAt"
     )
 VALUES
     (
         gen_random_uuid (),
-        'Maurits Penswick',
+        'Rowe Overland',
         'FEMALE',
-        'https://images.unsplash.com/photo-1722286419682-03c1aad69d5a?ixid=M3w1MjIyMzh8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MjQ5MjE3NTB8&ixlib=rb-4.0.3',
-        '1904-01-24 00:00:00',
-        '37592-58342',
-        'mpenswick9@csmonitor.com',
-        'SC',
-        'gT0=X1%h~&HSc',
-        '34671 New Castle Circle',
-        '888 Roxbury Road',
+        'https://images.unsplash.com/photo-1722776154198-c5113dc5d938?ixid=M3w1MjIyMzh8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MjQ5MjE3NTB8&ixlib=rb-4.0.3',
+        '1955-05-18 00:00:00',
+        '83718-92320',
+        'roverland9@ucoz.ru',
+        'GENERAL',
+        'hO1(fISDE',
+        '42 Petterle Hill',
+        '1 7th Avenue',
         'Hyderabad',
-        'Punjab',
-        '609414',
+        'Assam',
+        '523941',
         'IN',
-        'd+@triplex.com',
-        'eX9#LibV$<''h',
+        'y+@triplex.com',
+        'wN3`WPJj',
+        'Economics',
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
     );
@@ -470,28 +488,30 @@ INSERT INTO
         "country",
         "universityEmail",
         "universityEmailPassword",
+        "department",
         "createdAt",
         "updatedAt"
     )
 VALUES
     (
         gen_random_uuid (),
-        'Homerus Simoneau',
+        'Alasteir Lesor',
         'MALE',
-        'https://images.unsplash.com/photo-1722352450724-137256ff3b0a?ixid=M3w1MjIyMzh8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MjQ5MjE3NTB8&ixlib=rb-4.0.3',
-        '1994-05-15 00:00:00',
-        '85478-09975',
-        'hsimoneaua@ezinearticles.com',
+        'https://images.unsplash.com/photo-1723368298884-9f6c9146b127?ixid=M3w1MjIyMzh8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MjQ5MjE3NTB8&ixlib=rb-4.0.3',
+        '1964-01-26 00:00:00',
+        '84705-62285',
+        'alesora@cbc.ca',
         'OBC',
-        'pJ0.O9YzuR<=+O&%',
-        '478 Park Meadow Court',
-        '973 Norway Maple Avenue',
-        'Surat',
-        'Haryana',
-        '496866',
+        'kP7"KQBW',
+        '2 Center Road',
+        '46 Ridgeview Pass',
+        'Patna',
+        'Himachal Pradesh',
+        '145229',
         'IN',
-        '8+@triplex.com',
-        'mQ9''qiYgydW>#Li',
+        'e+@triplex.com',
+        'tM9"8>H^A',
+        'Political Science',
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
     );
@@ -516,6 +536,7 @@ INSERT INTO
         "country",
         "universityEmail",
         "universityEmailPassword",
+        "department",
         "createdAt",
         "updatedAt"
     )
@@ -536,8 +557,9 @@ VALUES
         'Telangana',
         '341154',
         'IN',
-        '4+@triplex.com',
+        '4s+@triplex.com',
         'tW2>e|9@',
+        'Mathematics',
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
     );
@@ -562,6 +584,7 @@ INSERT INTO
         "country",
         "universityEmail",
         "universityEmailPassword",
+        "department",
         "createdAt",
         "updatedAt"
     )
@@ -584,6 +607,7 @@ VALUES
         'IN',
         'eX9+@triplex.com',
         'dQ3=n|!<9"}Km"',
+        'Physics',
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
     );
@@ -608,6 +632,7 @@ INSERT INTO
         "country",
         "universityEmail",
         "universityEmailPassword",
+        "department",
         "createdAt",
         "updatedAt"
     )
@@ -630,6 +655,7 @@ VALUES
         'IN',
         'Ks+@triplex.com',
         'zO2/*yVwA',
+        'Chemistry',
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
     );
@@ -654,6 +680,7 @@ INSERT INTO
         "country",
         "universityEmail",
         "universityEmailPassword",
+        "department",
         "createdAt",
         "updatedAt"
     )
@@ -676,6 +703,7 @@ VALUES
         'IN',
         'r+@triplex.com',
         'xV8#1#4@zUtV)W0O',
+        'Biology',
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
     );
@@ -700,6 +728,7 @@ INSERT INTO
         "country",
         "universityEmail",
         "universityEmailPassword",
+        "department",
         "createdAt",
         "updatedAt"
     )
@@ -722,6 +751,7 @@ VALUES
         'IN',
         '0+@triplex.com',
         'qP0#8Gv3Q"gt&*Ys',
+        'History',
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
     );
@@ -746,6 +776,7 @@ INSERT INTO
         "country",
         "universityEmail",
         "universityEmailPassword",
+        "department",
         "createdAt",
         "updatedAt"
     )
@@ -768,6 +799,7 @@ VALUES
         'IN',
         'B+@triplex.com',
         'zJ3$<&JMAB&',
+        'Economics',
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
     );
@@ -792,28 +824,30 @@ INSERT INTO
         "country",
         "universityEmail",
         "universityEmailPassword",
+        "department",
         "createdAt",
         "updatedAt"
     )
 VALUES
     (
         gen_random_uuid (),
-        'Melisa Chessman',
-        'MALE',
-        'https://images.unsplash.com/photo-1723581048670-bdd958641c2e?ixid=M3w1MjIyMzh8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MjQ5MjE3NTB8&ixlib=rb-4.0.3',
-        '1991-09-19 00:00:00',
-        '45050-56852',
-        'mchessmanh@wordpress.org',
+        'Florinda Simoes',
+        'FEMALE',
+        'https://images.unsplash.com/photo-1723493271869-4d71c09c73e1?ixid=M3w1MjIyMzh8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MjQ5MjE3NTB8&ixlib=rb-4.0.3',
+        '1934-11-23 00:00:00',
+        '39960-34908',
+        'fsimoesh@webeden.co.uk',
         'GENERAL',
-        'yZ8~W@/)',
-        '81057 Nancy Way',
-        '75386 Fisk Park',
-        'Delhi',
-        'Assam',
-        '479303',
+        'uS3#{5Oby8Pb',
+        '8 Marcy Hill',
+        '070 Troy Circle',
+        'Vadodara',
+        'Bihar',
+        '902741',
         'IN',
-        'P+@triplex.com',
-        'aW3"NPo*!7',
+        't+@triplex.com',
+        'rW0(V9p}AY',
+        'Sociology',
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
     );
@@ -838,28 +872,30 @@ INSERT INTO
         "country",
         "universityEmail",
         "universityEmailPassword",
+        "department",
         "createdAt",
         "updatedAt"
     )
 VALUES
     (
         gen_random_uuid (),
-        'Dinah Schankel',
-        'MALE',
-        'https://images.unsplash.com/photo-1723474549831-0d70d6c5f2b5?ixid=M3w1MjIyMzh8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MjQ5MjE3NTB8&ixlib=rb-4.0.3',
-        '1908-11-11 00:00:00',
-        '50267-49165',
-        'dschankelj@so-net.ne.jp',
+        'Erminie Baldin',
+        'FEMALE',
+        'https://images.unsplash.com/photo-1723438906614-83f7e2f0a238?ixid=M3w1MjIyMzh8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MjQ5MjE3NTB8&ixlib=rb-4.0.3',
+        '1974-06-22 00:00:00',
+        '43688-26327',
+        'ebaldini@pen.io',
         'SC',
-        'jQ9`fY$X?',
-        '7485 Morrow Road',
-        '93270 Union Circle',
-        'Mumbai',
-        'Goa',
-        '656769',
+        'tR2+()bOz"Z7RlmH',
+        '29233 Norway Maple Lane',
+        '80 Walton Junction',
+        'Vadodara',
+        'Andhra Pradesh',
+        '972134',
         'IN',
-        'w+@triplex.com',
-        'oZ6_P.=A>)U@Jr%x',
+        '4+@triplex.com',
+        'cF6?H7',
+        'Geography',
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
     );
@@ -884,28 +920,30 @@ INSERT INTO
         "country",
         "universityEmail",
         "universityEmailPassword",
+        "department",
         "createdAt",
         "updatedAt"
     )
 VALUES
     (
         gen_random_uuid (),
-        'Nealy Beacock',
+        'John Langsbury',
         'MALE',
-        'https://images.unsplash.com/photo-1723466394531-4e619a44c068?ixid=M3w1MjIyMzh8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MjQ5MjE3NTB8&ixlib=rb-4.0.3',
-        '2011-12-03 00:00:00',
-        '72330-46765',
-        'nbeacockk@apache.org',
+        'https://images.unsplash.com/photo-1723401940848-83f6b7f1f0b8?ixid=M3w1MjIyMzh8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MjQ5MjE3NTB8&ixlib=rb-4.0.3',
+        '1999-07-05 00:00:00',
+        '31231-63183',
+        'jlangsburyj@weather.com',
         'GENERAL',
-        'wA6/5<v*zUa01|<I',
-        '2048 Barby Hill',
-        '4 Mitchell Parkway',
-        'Ahmedabad',
-        'Goa',
-        '767356',
+        'rS8^[8P',
+        '22 Sunset Drive',
+        '09 Camden Pass',
+        'Jaipur',
+        'Karnataka',
+        '876545',
         'IN',
-        '123x+@triplex.com',
-        'rO9%zci02?',
+        '4n+@triplex.com',
+        'gT6!7yQ',
+        'History',
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
     );
@@ -930,120 +968,30 @@ INSERT INTO
         "country",
         "universityEmail",
         "universityEmailPassword",
+        "department",
         "createdAt",
         "updatedAt"
     )
 VALUES
     (
         gen_random_uuid (),
-        'Leticia Baldin',
-        'FEMALE',
-        'https://images.unsplash.com/photo-1723451150479-3c99f94a9055?ixid=M3w1MjIyMzh8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MjQ5MjE3NTB8&ixlib=rb-4.0.3',
-        '1977-02-08 00:00:00',
-        '80665-22740',
-        'lbaldinl@4shared.com',
+        'Keenan Orhtmann',
+        'MALE',
+        'https://images.unsplash.com/photo-1723267810926-468a2f5f0d36?ixid=M3w1MjIyMzh8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MjQ5MjE3NTB8&ixlib=rb-4.0.3',
+        '1976-09-13 00:00:00',
+        '23983-14827',
+        'korthmannk@jalbum.net',
         'GENERAL',
-        'kY0.WOZNh!mXbN',
-        '7 Farmco Lane',
-        '67447 Everett Road',
-        'Ahmedabad',
-        'Punjab',
-        '524080',
+        'kW7}+D8W',
+        '97184 Burning Wood Court',
+        '2 Village Terrace',
+        'Surat',
+        'Odisha',
+        '401223',
         'IN',
-        '1+@triplex.com',
-        'mE4.`TEMR!>v7',
-        CURRENT_TIMESTAMP,
-        CURRENT_TIMESTAMP
-    );
-
--- Statement 21
-INSERT INTO
-    "Teacher" (
-        "id",
-        "name",
-        "gender",
-        "profilePicUrl",
-        "dateOfBirth",
-        "phoneNumber",
-        "email",
-        "category",
-        "password",
-        "permanentAddress",
-        "currentAddress",
-        "city",
-        "state",
-        "pincode",
-        "country",
-        "universityEmail",
-        "universityEmailPassword",
-        "createdAt",
-        "updatedAt"
-    )
-VALUES
-    (
-        gen_random_uuid (),
-        'Catlin Ozelton',
-        'MALE',
-        'https://images.unsplash.com/photo-1723404102067-ee64a8548ad0?ixid=M3w1MjIyMzh8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MjQ5MjE3NTB8&ixlib=rb-4.0.3',
-        '2004-04-18 00:00:00',
-        '98670-64211',
-        'cozeltonm@scientificamerican.com',
-        'OBC',
-        'jA7(~ewHLckCkI.',
-        '2166 Kedzie Street',
-        '0 Gale Place',
-        'Hyderabad',
-        'Telangana',
-        '641782',
-        'IN',
-        'D+@triplex.com',
-        'sK5>LIGNVBG$8',
-        CURRENT_TIMESTAMP,
-        CURRENT_TIMESTAMP
-    );
-
--- Statement 22
-INSERT INTO
-    "Teacher" (
-        "id",
-        "name",
-        "gender",
-        "profilePicUrl",
-        "dateOfBirth",
-        "phoneNumber",
-        "email",
-        "category",
-        "password",
-        "permanentAddress",
-        "currentAddress",
-        "city",
-        "state",
-        "pincode",
-        "country",
-        "universityEmail",
-        "universityEmailPassword",
-        "createdAt",
-        "updatedAt"
-    )
-VALUES
-    (
-        gen_random_uuid (),
-        'Jillana Lindstedt',
-        'MALE',
-        'https://images.unsplash.com/photo-1723398341301-78a5d4b054c8?ixid=M3w1MjIyMzh8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MjQ5MjE3NTB8&ixlib=rb-4.0.3',
-        '1988-06-06 00:00:00',
-        '60336-75910',
-        'jlindstedtn@desdev.cn',
-        'OBC',
-        'gI4"tz+8',
-        '842 Melvin Hill',
-        '19689 Eliot Lane',
-        'Bangalore',
-        'Uttar Pradesh',
-        '338730',
-        'IN',
-        'o+@triplex.com',
-        'wQ1)On)y@',
+        '3+@triplex.com',
+        'bN9&!Vv',
+        'Political Science',
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
     );
@@ -1068,6 +1016,7 @@ INSERT INTO
         "country",
         "universityEmail",
         "universityEmailPassword",
+        "department",
         "createdAt",
         "updatedAt"
     )
@@ -1090,6 +1039,7 @@ VALUES
         'IN',
         'Kf+@triplex.com',
         'mO8@+<yL2gN',
+        'Physics',
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
     );
