@@ -1,6 +1,6 @@
 include .env.development
 
-.PHONY: 
+.PHONY: plant up reset clean check-env
 
 # To build a pre-seeded db image.
 plant:	
