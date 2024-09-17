@@ -8,7 +8,6 @@ import cookieParser from "cookie-parser";
 
 // middlewares
 
-app.use(errorMiddleware);
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
@@ -23,6 +22,7 @@ if (process.env.NODE_ENV === "development") {
 
 app.use("/admin", adminRoutes);
 
+app.use(errorMiddleware);
 app.listen(PORT, () => {
     console.info(`-> now listening at http://localhost:${PORT}/`);
 });
