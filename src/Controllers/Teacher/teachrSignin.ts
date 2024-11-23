@@ -4,7 +4,7 @@ import type express from "express";
 import { comparePasswordFunction } from "@/Helpers/HashPassword";
 import { createToken, type JWT } from "@/Helpers/createTokens";
 
-const adminSignIn = async (
+const teacherSignIn = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction,
@@ -12,31 +12,29 @@ const adminSignIn = async (
     try {
         const { universityEmail, universityEmailPassword } = req.body;
 
-        const adminData = await prismaClient.admin.findUnique({
+        const teacherData = await prismaClient.teacher.findUnique({
             where: {
                 universityEmail: universityEmail,
             },
         });
-        if (!adminData) {
-            throw new Error("Admin not found with the provided email");
+        if (!teacherData) {
+            throw new Error("Teacher not found with the provided email");
         }
 
-        const adminHashPassword = adminData.universityEmailPassword;
-     
+        const teacherHashPassword = teacherData.universityEmailPassword;
+   
         const passwordMatched = await comparePasswordFunction(
             universityEmailPassword,
-            adminHashPassword,
+            teacherHashPassword,
         );
-       
 
         if (passwordMatched) {
             const userAccessTokenPayload: JWT = {
-                sub: adminData.id.toString(), // The subject of the token is the user's ID
-                rollType: "admin",
+                sub: teacherData.id.toString(), // The subject of the token is the user's ID
+                rollType: "teacher",
                 userData: {
-                    name: adminData.name,
-                    universityEmail: adminData.universityEmail,
-                   
+                    name: teacherData.name,
+                    universityEmail: teacherData.universityEmail,
                 },
             };
             const token = createToken(userAccessTokenPayload);
@@ -50,11 +48,15 @@ const adminSignIn = async (
 
             return res
                 .status(200)
-                .json({ message: "Admin signed in successfully"  });
+                .json({ message: "Teacher signed in successfully" ,
+                    userId: teacherData.id,
+
+                });
         }
+        throw new Error("Invalid password");
     } catch (err) {
         next(err);
     }
 };
 
-export default adminSignIn;
+export default teacherSignIn;

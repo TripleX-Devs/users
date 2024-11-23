@@ -8,7 +8,7 @@ const getAdminDetails = async (
 ) => {
     try {
         const adminId = req.params.id;
-        console.log(adminId);
+
         const adminData = await prismaClient.admin.findUnique({
             where: {
                 id: adminId,
