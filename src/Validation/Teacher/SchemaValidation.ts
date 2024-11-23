@@ -1,36 +1,36 @@
 import Joi from "joi";
 import { Gender, Category } from "@prisma/client";
 
-export const signUpSchemaValidation = Joi.object({
+// Define the Joi schema for the Teacher model
+export const teacherSchema = Joi.object({
+    id: Joi.string().uuid().optional(),
     name: Joi.string().required(),
     gender: Joi.string()
         .valid(...Object.values(Gender))
         .required(),
     profilePicUrl: Joi.string().uri().required(),
     dateOfBirth: Joi.date().required(),
-    phoneNumber: Joi.string().required(),
+    phoneNumber: Joi.number().required(),
     email: Joi.string().email().required(),
     category: Joi.string()
         .valid(...Object.values(Category))
-        .required(),
-    password: Joi.string().required().min(4),
+        .required(), // Replace with actual categories
+    password: Joi.string().required(),
     permanentAddress: Joi.string().required(),
     currentAddress: Joi.string().required(),
     city: Joi.string().required(),
     state: Joi.string().required(),
-    pincode: Joi.string().required(),
+    pincode: Joi.number().required(),
     country: Joi.string().required(),
     universityEmail: Joi.string().email().required(),
-    universityEmailPassword: Joi.string().required().min(4),
+    universityEmailPassword: Joi.string().required(),
+    department: Joi.string().required(),
+    createdAt: Joi.date().optional(),
+    updatedAt: Joi.date().optional(),
 });
 
-export const signInSchemaValidation = Joi.object({
-    universityEmail: Joi.string().email().required(),
-    universityEmailPassword: Joi.string().required().min(4),
-});
-
-export const updateAdminSchemaValidation = Joi.object({
-    id: Joi.forbidden(), // ID should not be updated
+export const teacherUpdateSchema = Joi.object({
+    id: Joi.string().uuid().optional(),
     name: Joi.string().optional(),
     gender: Joi.string()
         .valid(...Object.values(Gender))
@@ -41,8 +41,8 @@ export const updateAdminSchemaValidation = Joi.object({
     email: Joi.string().email().optional(),
     category: Joi.string()
         .valid(...Object.values(Category))
-        .optional(),
-    password: Joi.string().optional().min(4),
+        .optional(), // Replace with actual categories
+    password: Joi.string().optional(),
     permanentAddress: Joi.string().optional(),
     currentAddress: Joi.string().optional(),
     city: Joi.string().optional(),
@@ -50,6 +50,14 @@ export const updateAdminSchemaValidation = Joi.object({
     pincode: Joi.string().optional(),
     country: Joi.string().optional(),
     universityEmail: Joi.string().email().optional(),
-    universityEmailPassword: Joi.string().optional().min(4),
+    universityEmailPassword: Joi.string().optional(),
     department: Joi.string().optional(),
+    createdAt: Joi.date().optional(),
+    updatedAt: Joi.date().optional(),
+});
+
+
+export const signInSchemaValidation = Joi.object({
+    universityEmail: Joi.string().email().required(),
+    universityEmailPassword: Joi.string().required().min(4),
 });
