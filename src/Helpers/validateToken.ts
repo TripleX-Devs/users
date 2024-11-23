@@ -1,4 +1,4 @@
-import express from "express";
+
 import jwt from "jsonwebtoken";
 
 export const validateToken = (token: string): Promise<boolean> => {
