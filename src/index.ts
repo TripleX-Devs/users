@@ -1,10 +1,24 @@
 import express from "express";
+const cors = require('cors');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
+
+app.use(cors({
+    origin: 'http://localhost:5173', // Replace with your frontend URL
+    credentials: true, // Allow cookies to be sent
+}));
+
+
 import adminRoutes from "@/Routes/Admin/AdminRoutes";
+import adminTeacherRoutes from "@/Routes/Admin/TeacherAddRoutes";
+import teacherRoutes from "@/Routes/Teacher/TeacherRoutes";
+import studentRoutes from "@/Routes/Student/StudentRoutes";
+import adminStudentRoutes from "@/Routes/Admin/StudentAddRoutes";
+
 import { errorMiddleware } from "@/middlewares/errorHandling";
 import cookieParser from "cookie-parser";
+
 
 // middlewares
 
@@ -21,6 +35,19 @@ if (process.env.NODE_ENV === "development") {
 // admin routes
 
 app.use("/admin", adminRoutes);
+
+// app.use(checkForAccessToken);
+app.use("/admin/teacher", adminTeacherRoutes);
+app.use("/admin/student", adminStudentRoutes);
+
+
+
+// for student route
+app.use("/teacher", teacherRoutes);
+
+
+// for student route
+app.use("/student",studentRoutes );
 
 app.use(errorMiddleware);
 app.listen(PORT, () => {

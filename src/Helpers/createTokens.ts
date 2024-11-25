@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 
 export type JWT = {
     sub: string;
+    rollType: string;
     userData?: {
         name: string;
         universityEmail: string;
@@ -11,6 +12,8 @@ export type JWT = {
     iat?: Date; // Issued at - Date when the token was created
     exp?: Date; // Expiry date of the token
 };
+
+
 
 export const createToken = (payload: JWT) => {
     const token = jwt.sign(payload, process.env.JWT_SECRET as string, {

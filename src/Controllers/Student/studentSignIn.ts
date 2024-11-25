@@ -4,7 +4,7 @@ import type express from "express";
 import { comparePasswordFunction } from "@/Helpers/HashPassword";
 import { createToken, type JWT } from "@/Helpers/createTokens";
 
-const adminSignIn = async (
+const studentSignIn = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction,
@@ -12,31 +12,29 @@ const adminSignIn = async (
     try {
         const { universityEmail, universityEmailPassword } = req.body;
 
-        const adminData = await prismaClient.admin.findUnique({
+        const studentData = await prismaClient.student.findUnique({
             where: {
                 universityEmail: universityEmail,
             },
         });
-        if (!adminData) {
-            throw new Error("Admin not found with the provided email");
+        if (!studentData) {
+            throw new Error("Student not found with the provided email");
         }
 
-        const adminHashPassword = adminData.universityEmailPassword;
-     
+        const studentHashPassword = studentData.universityEmailPassword;
+   
         const passwordMatched = await comparePasswordFunction(
             universityEmailPassword,
-            adminHashPassword,
+            studentHashPassword,
         );
-       
 
         if (passwordMatched) {
             const userAccessTokenPayload: JWT = {
-                sub: adminData.id.toString(), // The subject of the token is the user's ID
-                rollType: "admin",
+                sub: studentData.rollNo.toString(), // The subject of the token is the student's roll number
+                rollType: "student",
                 userData: {
-                    name: adminData.name,
-                    universityEmail: adminData.universityEmail,
-                   
+                    name: studentData.name,
+                    universityEmail: studentData.universityEmail,
                 },
             };
             const token = createToken(userAccessTokenPayload);
@@ -47,8 +45,7 @@ const adminSignIn = async (
                 sameSite: "none",
                 maxAge: 1000 * 60 * 60 * 24,
             });
-
-            res.cookie("role", "admin",{  
+            res.cookie("role", "student",{  
                 httpOnly: false,
                 secure: true,
                 sameSite: "none",
@@ -56,19 +53,19 @@ const adminSignIn = async (
 
             })
 
-
             return res
                 .status(200)
-                .json({ message: "Admin signed in successfully",
+                .json({ message: "Student signed in successfully",
+                    userId: studentData.rollNo,
+                    name: studentData.name,
                     token: token,
-                    role: "admin",
-                    name: adminData.name,
-                    universityEmail: adminData.universityEmail,
-                  });
+                    universityEmail: studentData.universityEmail,
+                });
         }
+        throw new Error("Invalid password");
     } catch (err) {
         next(err);
     }
 };
 
-export default adminSignIn;
+export default studentSignIn;

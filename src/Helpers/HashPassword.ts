@@ -33,5 +33,10 @@ export const comparePasswordFunction = (
                 }
             }
         });
+        // if(password === hash){
+        //     resolve(true);
+        // }else{
+        //     reject(new Error("Password does not match"));
+        // }
     });
 };

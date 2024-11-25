@@ -3,17 +3,12 @@
     "version": "0.1.0",
     "scripts": {
         "dotenv": "dotenvx run -f .env.development --",
-
         "dev": "yarn dotenv tsx watch ./src/index.ts",
-
         "migrate:dev": "yarn dotenv prisma migrate dev",
         "migrate:prod": "yarn dotenv prisma generate",
         "migrate:reset": "yarn dotenv prisma migrate reset",
-
         "studio": "yarn dotenv prisma studio",
-
         "format": "biome format --write",
-
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node ./index.js",
         "build": "tspc"
@@ -22,7 +17,9 @@
         "@prisma/client": "^5.19.1",
         "bcrypt": "^5.1.1",
         "cookie-parser": "^1.4.6",
+        "cors": "^2.8.5",
         "csv-parser": "^3.0.0",
+        "dotenv": "^16.4.5",
         "express": "^4.19.2",
         "joi": "^17.13.3",
         "jsonwebtoken": "^9.0.2",
@@ -31,7 +28,8 @@
         "pino": "^9.3.2",
         "pino-http": "^10.2.0",
         "pino-pretty": "^11.2.2",
-        "prisma": "^5.19.1"
+        "prisma": "^5.19.1",
+        "xlsx": "^0.18.5"
     },
     "devDependencies": {
         "@biomejs/biome": "^1.8.3",
