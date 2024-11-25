@@ -40,16 +40,26 @@ const studentSignIn = async (
             const token = createToken(userAccessTokenPayload);
 
             res.cookie("token", token, {
-                httpOnly: true,
+                httpOnly: false,
                 secure: true,
                 sameSite: "none",
                 maxAge: 1000 * 60 * 60 * 24,
             });
+            res.cookie("role", "student",{  
+                httpOnly: false,
+                secure: true,
+                sameSite: "none",
+                maxAge: 1000 * 60 * 60 * 24,
+
+            })
 
             return res
                 .status(200)
                 .json({ message: "Student signed in successfully",
-                    RollNumber: studentData.rollNo,
+                    userId: studentData.rollNo,
+                    name: studentData.name,
+                    token: token,
+                    universityEmail: studentData.universityEmail,
                 });
         }
         throw new Error("Invalid password");

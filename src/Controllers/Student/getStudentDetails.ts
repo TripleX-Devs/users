@@ -1,14 +1,23 @@
 import type express from "express";
 import prismaClient from "@/config/db";
-
+import jwt from "jsonwebtoken";
 const getStudentDetails = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction,
 ) => {
     try {
-        const rollNumber = req.params.rollNo;
-        
+       
+        const token = req.cookies.token;
+       
+        if (!token) {
+            throw new Error("Unauthorized");
+        }
+
+        const decoded=jwt.verify(token,process.env.JWT_SECRET as string) as { sub: string; rollType: string; userData: { name: string; universityEmail: string } };
+
+        const rollNumber = decoded.sub;
+
         const studentData = await prismaClient.student.findUnique({
             where: {
                 rollNo: rollNumber,

@@ -20,7 +20,7 @@ router.post("/signinStudent", validateRequest(studentSignInSchemaValidation),stu
 router.use(checkForAccessToken);
 router.use(checkRole("student"));
 
-router.get("/getStudentData/:rollNo",checkRollNumber, getStudentDetails);
-router.put("/studentUpdate/:rollNo",checkRollNumber,validateRequest(studentUpdateSchemaValidation), updateStudent);
+router.get("/getStudentData", getStudentDetails);
+router.put("/studentUpdate/:rollNo",validateRequest(studentUpdateSchemaValidation), updateStudent);
 
 export default router;

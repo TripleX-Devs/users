@@ -7,7 +7,7 @@ import getTeacherDetails from "@/Controllers/Teacher/getTeacherDetails";
 
 import { validateRequest } from "@/middlewares/validationFunction";
 import { signInSchemaValidation, teacherUpdateSchema } from "@/Validation/Teacher/SchemaValidation";
-import teacherSignIn from "@/Controllers/Teacher/teachrSignin";
+import teacherSignIn from "@/Controllers/Teacher/teacherSignin";
 import { checkForAccessToken } from "@/middlewares/authToken";
 import updateTeacher from "@/Controllers/Teacher/updateTeacher";
 import { checkRole } from "@/middlewares/checkRole";
@@ -21,7 +21,7 @@ router.post("/signinTeacher", validateRequest(signInSchemaValidation),teacherSig
 router.use(checkForAccessToken);
 router.use(checkRole("teacher"));
 // router.use();
-router.get("/getTeacherData/:id",checkIdTeacher, getTeacherDetails);
-router.put("/teacherUpdate/:id",checkIdTeacher, validateRequest(teacherUpdateSchema) ,updateTeacher);
+router.get("/getTeacherData",getTeacherDetails);
+router.put("/teacherUpdate/:id", validateRequest(teacherUpdateSchema) ,updateTeacher);
 
 export default router;

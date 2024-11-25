@@ -1,7 +1,15 @@
 import express from "express";
+const cors = require('cors');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
+
+app.use(cors({
+    origin: 'http://localhost:5173', // Replace with your frontend URL
+    credentials: true, // Allow cookies to be sent
+}));
+
+
 import adminRoutes from "@/Routes/Admin/AdminRoutes";
 import adminTeacherRoutes from "@/Routes/Admin/TeacherAddRoutes";
 import teacherRoutes from "@/Routes/Teacher/TeacherRoutes";

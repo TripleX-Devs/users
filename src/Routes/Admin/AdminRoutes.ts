@@ -29,13 +29,9 @@ router.post("/login", validateRequest(signInSchemaValidation), adminSignIn);
 router.use(checkForAccessToken);
 router.use(checkRole("admin"));
 
-router.get("/getAdminData/:id", checkIdAdmin,getAdminDetails);
-router.put(
-    "/update/:id",checkIdAdmin,
-    validateRequest(updateAdminSchemaValidation),
-    updateAdmin,
-);
-router.delete("/delete/:id", checkIdAdmin,deleteAdmin);
+router.get("/getAdminData",getAdminDetails);
+router.put("/update/:id",validateRequest(updateAdminSchemaValidation),updateAdmin);
+router.delete("/delete/:id",deleteAdmin);
 
 router.get("/getAllTeachers",getAllTeachers)
 

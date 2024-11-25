@@ -42,15 +42,29 @@ const adminSignIn = async (
             const token = createToken(userAccessTokenPayload);
 
             res.cookie("token", token, {
-                httpOnly: true,
+                httpOnly: false,
                 secure: true,
                 sameSite: "none",
                 maxAge: 1000 * 60 * 60 * 24,
             });
 
+            res.cookie("role", "admin",{  
+                httpOnly: false,
+                secure: true,
+                sameSite: "none",
+                maxAge: 1000 * 60 * 60 * 24,
+
+            })
+
+
             return res
                 .status(200)
-                .json({ message: "Admin signed in successfully"  });
+                .json({ message: "Admin signed in successfully",
+                    token: token,
+                    role: "admin",
+                    name: adminData.name,
+                    universityEmail: adminData.universityEmail,
+                  });
         }
     } catch (err) {
         next(err);
