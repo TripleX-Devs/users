@@ -1,4 +1,5 @@
-import type { Request, Response, NextFunction } from "express";
+import type { Request, Response, NextFunction } from 'express';
+import ResponsePayload from '@/utils/resGenerator';
 
 export const errorMiddleware = (
     err: Error,
@@ -6,6 +7,8 @@ export const errorMiddleware = (
     res: Response,
     next: NextFunction,
 ) => {
+    const resPayload = new ResponsePayload();
     console.error(err.stack);
-    res.status(500).json({ message: err.message || "Internal Server Error" });
+    resPayload.setError(err.message || 'Internal Server Error');
+    return res.status(500).json(resPayload);
 };
