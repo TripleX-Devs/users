@@ -2,23 +2,23 @@ import type express from "express";
 import prismaClient from "@/config/db";
 import ResponsePayload from "@/utils/resGenerator";
 
-const getAllTeachers = async (
+const getAllStudents = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction,
 ) => {
-    const funcName = "getAllTeachers";
+    const funcName = "getAllStudents";
     const resPayload = new ResponsePayload();
     try {
-        const teachersData = await prismaClient.teacher.findMany();
+        const studentsData = await prismaClient.student.findMany();
 
-        if (!teachersData || teachersData.length === 0) {
-            resPayload.setError("No teachers found");
+        if (!studentsData || studentsData.length === 0) {
+            resPayload.setError("No students found");
             console.log(resPayload, `-> response for ${funcName} controller`);
             return res.status(404).json(resPayload);
         }
 
-        resPayload.setSuccess("All teachers data", teachersData);
+        resPayload.setSuccess("All students data", studentsData);
         console.log(resPayload, `-> response for ${funcName} controller`);
         return res.status(200).json(resPayload);
     } catch (err) {
@@ -28,4 +28,4 @@ const getAllTeachers = async (
     }
 };
 
-export default getAllTeachers;
+export default getAllStudents;

@@ -1,20 +1,37 @@
 import prismaClient from "@/config/db";
 import type express from "express";
-
+import ResponsePayload from "@/utils/resGenerator";
+import jwt from "jsonwebtoken";
 const updateTeacher = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction,
 ) => {
+    const resPayload = new ResponsePayload();
     try {
         const teacherUpdateData = req.body;
-        const teacherId = req.params.id;
+        
+        const token = req.cookies.token;
+
+        if (!token) {
+            throw new Error('Unauthorized');
+        }
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
+            sub: string;
+            rollType: string;
+            userData: { name: string; universityEmail: string };
+        };
+
+        const teacherId = decoded.sub;
 
         if (!teacherId) {
-            return res.status(400).json({ message: "Teacher id is required" });
+            resPayload.setError("Teacher id is required");
+            return res.status(400).json(resPayload);
         }
         if (!teacherUpdateData || Object.keys(teacherUpdateData).length === 0) {
-            return res.status(400).json({ message: "Update data is required" });
+            resPayload.setError("Update data is required");
+            return res.status(400).json(resPayload);
         }
         const teacherData = await prismaClient.teacher.findFirst({
             where: {
@@ -23,7 +40,8 @@ const updateTeacher = async (
         });
 
         if (!teacherData) {
-            return res.status(404).json({ message: "Teacher not found" });
+            resPayload.setError("Teacher not found");
+            return res.status(404).json(resPayload);
         }
 
         const updateTeacher = await prismaClient.teacher.update({
@@ -32,10 +50,8 @@ const updateTeacher = async (
             },
             data: teacherUpdateData,
         });
-        return res.status(200).json({
-            message: "Teacher updated successfully",
-            teacher: updateTeacher,
-        });
+        resPayload.setSuccess("Teacher updated successfully", updateTeacher);
+        return res.status(200).json(resPayload);
     } catch (err) {
         next(err);
     }

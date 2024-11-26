@@ -34,20 +34,20 @@ if (process.env.NODE_ENV === "development") {
 
 // admin routes
 
-app.use("/admin", adminRoutes);
+app.use("/api/v1/admin", adminRoutes);
 
 // app.use(checkForAccessToken);
-app.use("/admin/teacher", adminTeacherRoutes);
-app.use("/admin/student", adminStudentRoutes);
+app.use("/api/v1/admin/teacher", adminTeacherRoutes);
+app.use("/api/v1/admin/student", adminStudentRoutes);
 
 
 
 // for student route
-app.use("/teacher", teacherRoutes);
+app.use("/api/v1/teacher", teacherRoutes);
 
 
 // for student route
-app.use("/student",studentRoutes );
+app.use("/api/v1/student",studentRoutes );
 
 app.use(errorMiddleware);
 app.listen(PORT, () => {

@@ -21,6 +21,6 @@ router.use(checkForAccessToken);
 router.use(checkRole("student"));
 
 router.get("/getStudentData", getStudentDetails);
-router.put("/studentUpdate/:rollNo",validateRequest(studentUpdateSchemaValidation), updateStudent);
+router.put("/studentUpdate",validateRequest(studentUpdateSchemaValidation), updateStudent);
 
 export default router;

@@ -20,6 +20,7 @@ import updateAdmin from "@/Controllers/Admin/private/admin/updateAdmin";
 import getAllTeachers from "@/Controllers/Admin/private/admin/getAllTeacher";
 import { checkRole } from "@/middlewares/checkRole";
 import { checkIdAdmin } from "@/middlewares/checkIdAdmin";
+import getAllStudents from "@/Controllers/Admin/private/admin/getAllStudent";
 
 router.post("/signup", validateRequest(signUpSchemaValidation), adminSignUp);
 
@@ -30,9 +31,10 @@ router.use(checkForAccessToken);
 router.use(checkRole("admin"));
 
 router.get("/getAdminData",getAdminDetails);
-router.put("/update/:id",validateRequest(updateAdminSchemaValidation),updateAdmin);
-router.delete("/delete/:id",deleteAdmin);
+router.put("/update",validateRequest(updateAdminSchemaValidation),updateAdmin);
+router.delete("/delete",deleteAdmin);
 
 router.get("/getAllTeachers",getAllTeachers)
+router.get("/getAllStudents",getAllStudents)
 
 export default router;

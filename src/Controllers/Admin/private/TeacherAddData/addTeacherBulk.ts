@@ -9,39 +9,50 @@ import type { Gender, Category } from "@prisma/client";
 import csvParser from "csv-parser";
 import { teacherSchema } from "@/Validation/Teacher/SchemaValidation";
 import bcrypt from "bcrypt";
-const upload = multer();
-const app = express();
-
+// const upload = multer();
+// const app = express();
+import ResponsePayload from "@/utils/resGenerator";
 const addTeachersDataBulk = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction,
 ) => {
+    const funcName = "addTeachersDataBulk";
+    const resPayload = new ResponsePayload();
     // console.log(req.file);
     const file = req.file;
     if (!file) {
-        return res.status(400).send("No file uploaded.");
+        resPayload.setError("No file uploaded.");
+        console.log(resPayload, `-> response for ${funcName} controller`);
+        return res.status(400).json(resPayload);
     }
 
     const fileExtension = path.extname(file.originalname).toLowerCase();
 
     if (fileExtension === ".csv") {
         if (file.size === 0) {
-            return res.status(400).send("File is empty");
+            resPayload.setError("File is empty");
+            console.log(resPayload, `-> response for ${funcName} controller`);
+            return res.status(400).json(resPayload);
         }
         handleCSVFile(file, res);
     } else if (fileExtension === ".xlsx" || fileExtension === ".xls") {
         if (file.size === 0) {
-            return res.status(400).send("File is empty");
+            resPayload.setError("File is empty");
+            console.log(resPayload, `-> response for ${funcName} controller`);
+            return res.status(400).json(resPayload);
         }
         handleExcelFile(file, res);
     } else {
-        res.status(400).send("Unsupported file format");
+        resPayload.setError("Unsupported file format");
+        console.log(resPayload, `-> response for ${funcName} controller`);
+        return res.status(400).json(resPayload);
     }
 };
 
 // Insert batch of rows into the database
-async function insertBatch(data: Prisma.TeacherCreateManyInput[]) {
+async function insertBatch(data: Prisma.TeacherCreateManyInput[], res: express.Response, funcName: string) {
+    const resPayload = new ResponsePayload();
     try {
         await prismaClient.teacher.createMany({
             data,
@@ -49,12 +60,16 @@ async function insertBatch(data: Prisma.TeacherCreateManyInput[]) {
         });
         console.log("Batch Data inserted successfully");
     } catch (error) {
-        console.error("Error inserting batch into DB:", error);
+        resPayload.setError("Error inserting batch into DB");
+        console.error(resPayload, `-> response for ${funcName} controller`);
+        return res.status(500).json(resPayload);
     }
 }
 
 // for handle csv file
 function handleCSVFile(file: Express.Multer.File, res: express.Response) {
+    const funcName = "handleCSVFile";
+    const resPayload = new ResponsePayload();
     const csvData: Prisma.TeacherCreateManyInput[] = [];
     const validationErrors: string[] = [];
     const readableStream = new Readable();
@@ -94,9 +109,11 @@ function handleCSVFile(file: Express.Multer.File, res: express.Response) {
 
     readableStream.on("end", async () => {
         if (validationErrors.length > 0) {
-            return res.status(400).json({ message: validationErrors.join(", ") });
+            resPayload.setError(validationErrors.join(", "));
+            console.log(resPayload, `-> response for ${funcName} controller`);
+            return res.status(400).json(resPayload);
         }
-    
+
         try {
             if (csvData.length > 0) {
                 // Hash passwords asynchronously
@@ -107,37 +124,41 @@ function handleCSVFile(file: Express.Multer.File, res: express.Response) {
                             value.universityEmailPassword = await bcrypt.hash(value.universityEmailPassword, 10);
                         })
                     );
-    
+
                     // Insert batch data after hashing
-                    await insertBatch(csvData);
+                    await insertBatch(csvData, res, funcName);
+
                 } catch (err) {
-                    console.error("Error inserting batch:", err);
-                    return res.status(500).json({
-                        message: "Error inserting batch",
-                    });
+                    resPayload.setError("Error inserting batch");
+                    console.error(resPayload, `-> response for ${funcName} controller`);
+                    return res.status(500).json(resPayload);
                 }
             }
-    
+
             // Respond success after processing
-            res.status(200).json({
-                message: "CSV file processed and data inserted successfully.",
-            });
+            resPayload.setSuccess("CSV file processed and data inserted successfully.");
+            console.log(resPayload, `-> response for ${funcName} controller`);
+            res.status(200).json(resPayload);
+
         } catch (err) {
-            console.error("Unexpected error:", err);
-            res.status(500).json({
-                message: "Error inserting batch or finding duplicate in data",
-            });
+            resPayload.setError("Error inserting batch or finding duplicate in data");
+            console.error(resPayload, `-> response for ${funcName} controller`);
+            res.status(500).json(resPayload);
         }
     });
-    
+
     readableStream.on("error", (error) => {
-        console.error("Error processing CSV:", error);
-        res.status(500).send("Error processing CSV.");
+        resPayload.setError("Error processing CSV");
+        console.error(resPayload, `-> response for ${funcName} controller`);
+        res.status(500).json(resPayload);
     });
 }
 
 //to handle excel file
 function handleExcelFile(file: Express.Multer.File, res: express.Response) {
+
+    const funcName = "handleExcelFile";
+    const resPayload = new ResponsePayload();
     const workbook = xlsx.read(file.buffer);
 
     const sheetName = workbook.SheetNames[0];
@@ -181,7 +202,9 @@ function handleExcelFile(file: Express.Multer.File, res: express.Response) {
         });
 
     if (validationErrors.length > 0) {
-        return res.status(400).json({ message: validationErrors.join(", ") });
+        resPayload.setError(validationErrors.join(", "));
+        console.log(resPayload, `-> response for ${funcName} controller`);
+        return res.status(400).json(resPayload);
     }
 
     const chunkSize = 1000;
@@ -191,9 +214,9 @@ function handleExcelFile(file: Express.Multer.File, res: express.Response) {
 
         const chunk = excelData.slice(currentIndex, currentIndex + chunkSize);
         if (chunk.length === 0) {
-            return res.status(200).json({
-                message: "Excel file processed and data inserted successfully.",
-            });
+            resPayload.setSuccess("Excel file processed and data inserted successfully.");
+            console.log(resPayload, `-> response for ${funcName} controller`);
+            return res.status(200).json(resPayload);
         }
 
         try {
@@ -202,13 +225,15 @@ function handleExcelFile(file: Express.Multer.File, res: express.Response) {
                 chunk.map(async (value) => {
                     value.universityEmailPassword = await bcrypt.hash(value.universityEmailPassword, 10);
                 })
-            );  
-            await insertBatch(chunk);
+            );
+            await insertBatch(chunk,res, funcName);
             currentIndex += chunkSize;
             processChunk();
         } catch (err) {
             // console.error('Error inserting batch:',err);
-            res.status(500).json({ message: "Error inserting batch" });
+            resPayload.setError("Error inserting batch");
+            console.error(resPayload, `-> response for ${funcName} controller`);
+            res.status(500).json(resPayload);
         }
     };
 

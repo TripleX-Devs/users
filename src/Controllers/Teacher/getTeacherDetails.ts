@@ -1,13 +1,16 @@
 import type express from "express";
 import prismaClient from "@/config/db";
 import jwt from "jsonwebtoken";
+import ResponsePayload from '@/utils/resGenerator';
+
 const getTeacherDetails = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction,
 ) => {
-    try {
-        // const teacherId = req.params.id;
+    try {   
+        const resPayload = new ResponsePayload();
+       
         const token = req.cookies.token;
         if (!token) {
             throw new Error("Unauthorized");
@@ -26,10 +29,9 @@ const getTeacherDetails = async (
         if (!teacherData) {
             throw new Error("Teacher not found");
         }
-
-        return res
-            .status(200)
-            .json({ message: "Teacher details", data: teacherData });
+        resPayload.setSuccess('Teacher details', teacherData);
+        return res.status(200).json(resPayload);
+        
     } catch (err) {
         next(err);
     }

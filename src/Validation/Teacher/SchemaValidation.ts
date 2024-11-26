@@ -37,7 +37,7 @@ export const teacherUpdateSchema = Joi.object({
         .optional(),
     profilePicUrl: Joi.string().uri().optional(),
     dateOfBirth: Joi.date().optional(),
-    phoneNumber: Joi.string().optional(),
+    phoneNumber: Joi.number().optional(),
     email: Joi.string().email().optional(),
     category: Joi.string()
         .valid(...Object.values(Category))
@@ -47,7 +47,7 @@ export const teacherUpdateSchema = Joi.object({
     currentAddress: Joi.string().optional(),
     city: Joi.string().optional(),
     state: Joi.string().optional(),
-    pincode: Joi.string().optional(),
+    pincode: Joi.number().optional(),
     country: Joi.string().optional(),
     universityEmail: Joi.string().email().optional(),
     universityEmailPassword: Joi.string().optional(),

@@ -4,11 +4,16 @@ import type express from "express";
 import { comparePasswordFunction } from "@/Helpers/HashPassword";
 import { createToken, type JWT } from "@/Helpers/createTokens";
 
+import ResponsePayload from '@/utils/resGenerator';
+
+
 const teacherSignIn = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction,
 ) => {
+    const funcName = 'teacherSignIn';
+    const resPayload = new ResponsePayload();
     try {
         const { universityEmail, universityEmailPassword } = req.body;
 
@@ -18,7 +23,10 @@ const teacherSignIn = async (
             },
         });
         if (!teacherData) {
-            throw new Error("Teacher not found with the provided email");
+            const resMessage = 'Teacher not found with the provided email';
+            resPayload.setConflict(resMessage);
+            console.log(resPayload, `-> response for ${funcName} controller`);
+            return res.status(404).json(resPayload);
         }
 
         const teacherHashPassword = teacherData.universityEmailPassword;
@@ -53,18 +61,25 @@ const teacherSignIn = async (
                 maxAge: 1000 * 60 * 60 * 24,
 
             })
-            
-            return res
-                .status(200)
-                .json({ message: "Teacher signed in successfully" ,
-                    userId: teacherData.id,
-                    name: teacherData.name,
-                    token: token,
-                    universityEmail: teacherData.universityEmail,
 
-                });
+            const resMessage = 'Teacher signed in successfully';
+            resPayload.setSuccess(resMessage, {
+                userId: teacherData.id,
+                token: token,
+                role: 'teacher',
+                name: teacherData.name,
+                universityEmail: teacherData.universityEmail,
+            });
+            
+            console.log(resPayload, `-> response for ${funcName} controller`);
+            return res.status(200).json(resPayload);
         }
-        throw new Error("Invalid password");
+        else {
+            const resMessage = 'Invalid password';
+            resPayload.setConflict(resMessage);
+            console.log(resPayload, `-> response for ${funcName} controller`);
+            return res.status(401).json(resPayload);
+        }
     } catch (err) {
         next(err);
     }

@@ -1,11 +1,14 @@
 import type express from "express";
 import prismaClient from "@/config/db";
 import jwt  from "jsonwebtoken";
+
+import ResponsePayload from '@/utils/resGenerator';
 const getAdminDetails = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction,
 ) => {
+    const resPayload = new ResponsePayload();
     try {
        
         const token = req.cookies.token;
@@ -26,9 +29,8 @@ const getAdminDetails = async (
             throw new Error("Admin not found");
         }
 
-        return res
-            .status(200)
-            .json({ message: "Admin details", data: adminData });
+        resPayload.setSuccess('Admin details', adminData);
+        return res.status(200).json(resPayload);
     } catch (err) {
         next(err);
     }

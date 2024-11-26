@@ -2,11 +2,17 @@ import prismaClient from "@/config/db";
 import type express from "express";
 import type { Gender, Category } from "@prisma/client";
 import bcrypt from "bcrypt";
+
+import ResponsePayload from "@/utils/resGenerator";
+
+
 const addStudentData = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction,
 ) => {
+    const funcName = "addStudentData";
+    const resPayload = new ResponsePayload();
 
     const studentData = req.body;
     
@@ -21,7 +27,9 @@ const addStudentData = async (
             },
         });
         if (existingStudent) {
-            return res.status(409).json({ message: "Student already exists" });
+            resPayload.setError("Student already exists");
+            console.log(resPayload, `-> response for ${funcName} controller`);
+            return res.status(409).json(resPayload);
         }
 
         const hashedPassword = await bcrypt.hash(studentData.universityEmailPassword, 10);
@@ -77,12 +85,13 @@ const addStudentData = async (
                 guardianEmail: studentData.guardianEmail,
             },
         });
-        res.status(201).json({
-            message: "Student added successfully",
-            data: newStudent,
-        });
+        resPayload.setSuccess("Student added successfully", newStudent);
+        console.log(resPayload, `-> response for ${funcName} controller`);
+        return res.status(201).json(resPayload);
     } catch (err) {
-        next(err);
+        resPayload.setError("Internal server error");
+        console.log(resPayload, `-> response for ${funcName} controller`);
+        return res.status(500).json(resPayload);
     }
 };
 
