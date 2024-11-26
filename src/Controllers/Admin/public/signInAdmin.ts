@@ -62,6 +62,7 @@ const adminSignIn = async (
 
             const resMessage = 'Admin signed in successfully';
             resPayload.setSuccess(resMessage, {
+                userId: adminData.id,
                 token: token,
                 role: 'admin',
                 name: adminData.name,

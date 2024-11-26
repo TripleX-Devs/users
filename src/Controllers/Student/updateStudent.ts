@@ -1,20 +1,36 @@
 import prismaClient from "@/config/db";
 import type express from "express";
+import ResponsePayload from "@/utils/resGenerator";
+import jwt from "jsonwebtoken";
 
 const updateStudent = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction,
 ) => {
+    const resPayload = new ResponsePayload();
     try {
         const studentUpdateData = req.body;
-        const rollNo= req.params.rollNo;
+        const token = req.cookies.token;
+
+        if (!token) {
+            throw new Error('Unauthorized');
+        }
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
+            sub: string;
+            rollType: string;
+            userData: { name: string; universityEmail: string };
+        };
+        const rollNo=decoded.sub;
 
         if (!rollNo) {
-            return res.status(400).json({ message: "Student id is required" });
+            resPayload.setError("Student Roll Number is required");
+            return res.status(400).json(resPayload);
         }
         if (!studentUpdateData || Object.keys(studentUpdateData).length === 0) {
-            return res.status(400).json({ message: "Update data is required" });
+            resPayload.setError("Update data is required");
+            return res.status(400).json(resPayload);
         }
         const studentData = await prismaClient.student.findFirst({
             where: {
@@ -23,7 +39,8 @@ const updateStudent = async (
         });
 
         if (!studentData) {
-            return res.status(404).json({ message: "Student not found" });
+            resPayload.setError("Student not found");
+            return res.status(404).json(resPayload);
         }
 
         const updateStudent = await prismaClient.student.update({
@@ -32,10 +49,8 @@ const updateStudent = async (
             },
             data: studentUpdateData,
         });
-        return res.status(200).json({
-            message: "Student updated successfully",
-            student: updateStudent,
-        });
+        resPayload.setSuccess("Student updated successfully", updateStudent);
+        return res.status(200).json(resPayload);
     } catch (err) {
         next(err);
     }

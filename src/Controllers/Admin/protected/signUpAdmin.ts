@@ -2,12 +2,16 @@ import type express from "express";
 import prismaClient from "@/config/db";
 
 import { hashedPasswordFunction } from "@/Helpers/HashPassword";
+import ResponsePayload from "@/utils/resGenerator";
 
 const adminSignUp = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction,
 ) => {
+    const funcName= "adminSignUp";
+    const resPayload = new ResponsePayload();
+
     const {
         name,
         gender,
@@ -35,10 +39,8 @@ const adminSignUp = async (
         });
 
         if (existingUser) {
-            return res.status(409).json({
-                message:
-                    "User already exists with the provided email or university email",
-            });
+            resPayload.setConflict("User already exists with the provided email or university email");
+            return res.status(409).json(resPayload);
         }
 
         const adminHashedPassword = await hashedPasswordFunction(password);
@@ -68,16 +70,13 @@ const adminSignUp = async (
                 universityEmailPassword: hashUniversityEmailPassword,
             },
         });
-
-        res.status(201).json({
-            message: "Admin registered successfully",
-            userId: user.id,
-        });
+        console.log(resPayload, `-> response for ${funcName} controller`);
+        resPayload.setSuccess("Admin registered successfully", { user: user });
+        return res.status(201).json(resPayload);
     } catch (err) {
         console.error(err);
-        res.status(500).json({
-            message: "Internal server error",
-        });
+        resPayload.setError("Internal server error");
+        return res.status(500).json(resPayload);
     }
 };
 

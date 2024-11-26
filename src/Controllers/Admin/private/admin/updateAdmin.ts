@@ -1,20 +1,37 @@
 import prismaClient from "@/config/db";
 import type express from "express";
-
+import ResponsePayload from "@/utils/resGenerator";
+import jwt from "jsonwebtoken";
 const updateAdmin = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction,
 ) => {
+    const resPayload = new ResponsePayload();
     try {
         const adminUpdateData = req.body;
-        const adminId = req.params.id;
+        const token = req.cookies.token;
+
+        if (!token) {
+            throw new Error('Unauthorized');
+        }
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
+            sub: string;
+            rollType: string;
+            userData: { name: string; universityEmail: string };
+        };
+        
+        const adminId = decoded.sub;
+
 
         if (!adminId) {
-            return res.status(400).json({ message: "Admin id is required" });
+            resPayload.setError("Admin id is required");
+            return res.status(400).json(resPayload);
         }
         if (!adminUpdateData || Object.keys(adminUpdateData).length === 0) {
-            return res.status(400).json({ message: "Update data is required" });
+            resPayload.setError("Update data is required");
+            return res.status(400).json(resPayload);
         }
         const adminData = await prismaClient.admin.findFirst({
             where: {
@@ -23,7 +40,8 @@ const updateAdmin = async (
         });
 
         if (!adminData) {
-            return res.status(404).json({ message: "Admin not found" });
+            resPayload.setError("Admin not found");
+            return res.status(404).json(resPayload);
         }
 
         const updateAdmin = await prismaClient.admin.update({
@@ -32,10 +50,8 @@ const updateAdmin = async (
             },
             data: adminUpdateData,
         });
-        return res.status(200).json({
-            message: "Admin updated successfully",
-            admin: updateAdmin,
-        });
+        resPayload.setSuccess("Admin updated successfully", updateAdmin);
+        return res.status(200).json(resPayload);
     } catch (err) {
         next(err);
     }

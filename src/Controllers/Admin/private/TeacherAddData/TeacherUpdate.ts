@@ -1,11 +1,15 @@
 import prismaClient from "@/config/db";
 import type express from "express";
 import bcrypt from "bcrypt";
+import ResponsePayload from "@/utils/resGenerator";
+
 const updateOneTeacherData = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction,
 ) => {
+    const funcName = "updateOneTeacherData";
+    const resPayload = new ResponsePayload()
     try {
         const teacherId = req.params.id;
 
@@ -16,7 +20,9 @@ const updateOneTeacherData = async (
         });
 
         if (!teacher) {
-            return res.status(404).send("Teacher not found");
+            resPayload.setError("Teacher not found");
+            console.log(resPayload, `-> response for ${funcName} controller`);
+            return res.status(404).json(resPayload);
         }
 
         const teacherData = req.body;
@@ -35,9 +41,13 @@ const updateOneTeacherData = async (
             },
         });
 
-        return res.status(200).send(updateTeacher);
+        resPayload.setSuccess("Teacher updated successfully", updateTeacher);
+        console.log(resPayload, `-> response for ${funcName} controller`);
+        return res.status(200).json(resPayload);
     } catch (err) {
-        return res.status(500).send("Internal server error");
+        resPayload.setError("Internal server error");
+        console.log(resPayload, `-> response for ${funcName} controller`);
+        return res.status(500).json(resPayload);
     }
 };
 

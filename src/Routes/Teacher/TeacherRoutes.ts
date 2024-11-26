@@ -22,6 +22,6 @@ router.use(checkForAccessToken);
 router.use(checkRole("teacher"));
 // router.use();
 router.get("/getTeacherData",getTeacherDetails);
-router.put("/teacherUpdate/:id", validateRequest(teacherUpdateSchema) ,updateTeacher);
+router.put("/teacherUpdate", validateRequest(teacherUpdateSchema) ,updateTeacher);
 
 export default router;

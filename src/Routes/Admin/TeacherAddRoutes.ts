@@ -30,5 +30,6 @@ router.put(
     updateOneTeacherData,
 );
 
-router.put('/updateTeacherInBulk', upload.single("file"), updateBulkTeacherData);
+router.put('/updateTeacherInBulk', upload.single("file"),
+    validateRequest(teacherUpdateSchema), updateBulkTeacherData);
 export default router;

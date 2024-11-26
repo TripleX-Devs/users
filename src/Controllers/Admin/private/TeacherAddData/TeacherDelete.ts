@@ -1,11 +1,14 @@
 import prismaClient from "@/config/db";
 import type express from "express";
+import ResponsePayload from "@/utils/resGenerator";
 
 const deleteTeacher = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction,
 ) => {
+    const funcName = "deleteTeacher";
+    const resPayload = new ResponsePayload();
     try {
         const teacherId = req.params.id;
         // console.log(teacherId);
@@ -15,21 +18,26 @@ const deleteTeacher = async (
             },
         });
 
-        console.log(teacherData);
 
         if (!teacherData) {
-            return res.status(404).send("Teacher not found");
+            resPayload.setError("Teacher not found");
+            console.log(resPayload, `-> response for ${funcName} controller`);
+            return res.status(404).json(resPayload);
         }
 
-        const teacher = await prismaClient.teacher.delete({
+        await prismaClient.teacher.delete({
             where: {
                 id: teacherId,
             },
         });
 
-        return res.status(200).send(teacher);
+        resPayload.setSuccess("Teacher deleted successfully");
+        console.log(resPayload, `-> response for ${funcName} controller`);
+        return res.status(200).json(resPayload);
     } catch (err) {
-        return res.status(500).send("Internal server error");
+        resPayload.setError("Internal server error");
+        console.log(resPayload, `-> response for ${funcName} controller`);
+        return res.status(500).json(resPayload);
     }
 };
 
