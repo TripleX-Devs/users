@@ -1,6 +1,6 @@
 include .env.development
 
-.PHONY: plant up reset clean check-env
+.PHONY: plant up reset clean check-env queue
 
 # To build a pre-seeded db image.
 plant:	
@@ -20,6 +20,10 @@ reset:
 # To delete compose volumes.
 clean: 
 	docker compose down -v
+
+# To start kafka queue.
+queue:
+	docker run -p 9092:9092 apache/kafka:3.9.0
 
 # To check if your env's are loading into Makefile.
 check-env: 
