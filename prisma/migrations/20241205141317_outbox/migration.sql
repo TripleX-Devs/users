@@ -12,6 +12,7 @@ CREATE TABLE "Student" (
     "name" TEXT NOT NULL,
     "rollNo" TEXT NOT NULL,
     "gender" "Gender" NOT NULL,
+    "profilePicUrl" TEXT NOT NULL,
     "dateOfBirth" TIMESTAMP(3) NOT NULL,
     "phoneNumber" TEXT NOT NULL,
     "email" TEXT NOT NULL,
@@ -66,6 +67,7 @@ CREATE TABLE "Teacher" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "gender" "Gender" NOT NULL,
+    "profilePicUrl" TEXT NOT NULL,
     "dateOfBirth" TIMESTAMP(3) NOT NULL,
     "phoneNumber" TEXT NOT NULL,
     "email" TEXT NOT NULL,
@@ -91,6 +93,7 @@ CREATE TABLE "Admin" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "gender" "Gender" NOT NULL,
+    "profilePicUrl" TEXT NOT NULL,
     "dateOfBirth" TIMESTAMP(3) NOT NULL,
     "phoneNumber" TEXT NOT NULL,
     "email" TEXT NOT NULL,
@@ -110,8 +113,22 @@ CREATE TABLE "Admin" (
     CONSTRAINT "Admin_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "OutboxEvent" (
+    "id" TEXT NOT NULL,
+    "eventType" TEXT NOT NULL,
+    "payload" JSONB NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "processed" BOOLEAN NOT NULL DEFAULT false,
+
+    CONSTRAINT "OutboxEvent_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Student_rollNo_key" ON "Student"("rollNo");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Student_profilePicUrl_key" ON "Student"("profilePicUrl");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Student_phoneNumber_key" ON "Student"("phoneNumber");
@@ -129,6 +146,9 @@ CREATE UNIQUE INDEX "Student_admissionNumber_key" ON "Student"("admissionNumber"
 CREATE UNIQUE INDEX "Student_universityEmail_key" ON "Student"("universityEmail");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Teacher_profilePicUrl_key" ON "Teacher"("profilePicUrl");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Teacher_phoneNumber_key" ON "Teacher"("phoneNumber");
 
 -- CreateIndex
@@ -136,6 +156,9 @@ CREATE UNIQUE INDEX "Teacher_email_key" ON "Teacher"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Teacher_universityEmail_key" ON "Teacher"("universityEmail");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Admin_profilePicUrl_key" ON "Admin"("profilePicUrl");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Admin_phoneNumber_key" ON "Admin"("phoneNumber");
