@@ -5,7 +5,6 @@ export async function startWorker() {
     workerInterval = setInterval(async () => {
         try {
             await publishOutboxEvents();
-            console.log("Outbox events processed successfully");
         } catch (error) {
             console.error("Error processing outbox events:", error);
         }
