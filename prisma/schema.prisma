@@ -133,6 +133,15 @@ model Admin {
     updatedAt DateTime @updatedAt
 }
 
+model OutboxEvent {
+    id        String   @id @default(uuid())
+    eventType String
+    payload   Json
+    createdAt DateTime @default(now())
+    processed Boolean  @default(false)
+}
+
+
 enum Gender {
     MALE
     FEMALE
