@@ -13,9 +13,9 @@ plant:
 up:
 	make plant && docker compose up --no-build
 
-# To delete compose images,containers & volumes.
+# To delete compose images, containers & volumes.
 reset: 	
-	docker-compose down -v --rmi all && docker compose rm -s
+	docker compose down -v --rmi all && docker compose rm -s
 
 # To delete compose volumes.
 clean: 
@@ -23,6 +23,6 @@ clean:
 
 # To check if your env's are loading into Makefile.
 check-env: 
-	@echo$(info	POSTGRES_USER is $(POSTGRES_USER)) \
-	$(info	POSTGRES_PASSWORD is $(POSTGRES_PASSWORD)) \
-	$(info	POSTGRES_DB is $(POSTGRES_DB))
+	@echo $(info POSTGRES_USER is $(POSTGRES_USER)) \
+	$(info POSTGRES_PASSWORD is $(POSTGRES_PASSWORD)) \
+	$(info POSTGRES_DB is $(POSTGRES_DB))
