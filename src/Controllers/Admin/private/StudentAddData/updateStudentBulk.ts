@@ -58,13 +58,25 @@ const updateOneStudentData = async (
     const funcName = "updateOneStudentData";
     const resPayload = new ResponsePayload();
     try {
-        await prismaClient.student.update({
-            where: {
-                universityEmail,
-            },
-            data: {
-                ...data,
-            },
+        await prismaClient.$transaction(async (tx) => {
+            const updateStudent = await tx.student.update({
+                where: {
+                    universityEmail,
+                },
+                data: {
+                    ...data,
+                },
+            });
+
+            await tx.outboxEvent.create({
+                data: {
+                    eventType: "student.created",
+                    payload: {
+                        rollNumber: updateStudent.rollNo,
+                        name: updateStudent.name,
+                    },
+                },
+            });
         });
     } catch (error) {
         resPayload.setError("Error updating data");

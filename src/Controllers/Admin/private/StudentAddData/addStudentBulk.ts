@@ -53,14 +53,34 @@ const addStudentsDataBulk = async (
 };
 
 // Insert batch of rows into the database
-async function insertBatch(data: Prisma.StudentCreateManyInput[],res: express.Response, funcName: string) {
+async function insertBatch(data: Prisma.StudentCreateManyInput[], res: express.Response, funcName: string) {
     const resPayload = new ResponsePayload();
     try {
-        await prismaClient.student.createMany({
-            data,
-            skipDuplicates: true, // Skip records that violate unique constraints
+        await prismaClient.$transaction(async (tx) => {
+            // Insert batch of students
+            await tx.student.createMany({
+                data,
+                skipDuplicates: true, // Skip records that violate unique constraints
+            });
+
+            // Create outbox events for each student
+            for (const student of data) {
+                await tx.outboxEvent.create({
+                    data: {
+                        eventType: "student.created",
+                        payload: {
+                            rollNumber: student.rollNo,
+                            group: student.group,
+                            name: student.name,
+                        },
+                    },
+                });
+            }
         });
+
         console.log("Batch Data inserted successfully");
+        resPayload.setSuccess("Batch Data inserted successfully");
+        return res.status(201).json(resPayload);
     } catch (error) {
         resPayload.setError("Error inserting batch into DB");
         console.error(resPayload, `-> response for ${funcName} controller`);

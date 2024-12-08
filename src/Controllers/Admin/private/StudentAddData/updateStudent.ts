@@ -2,6 +2,7 @@ import prismaClient from "@/config/db";
 import type express from "express";
 import bcrypt from "bcrypt";
 import ResponsePayload from "@/utils/resGenerator";
+
 const updateOneStudentData = async (
     req: express.Request,
     res: express.Response,
@@ -25,23 +26,35 @@ const updateOneStudentData = async (
         }
 
         const studentData = req.body;
-         // Check if password is provided and hash it
-         if (studentData.universityEmailPassword) {
+        // Check if password is provided and hash it
+        if (studentData.universityEmailPassword) {
             studentData.universityEmailPassword = await bcrypt.hash(studentData.universityEmailPassword, 10);
         }
 
-        const updateStudent = await prismaClient.student.update({
-            where: {
-                rollNo: studentRollNo,
-            },
-            data: {
-                ...studentData,
-            },
-        });
+        await prismaClient.$transaction(async (tx) => {
+            const updateStudent = await tx.student.update({
+                where: {
+                    rollNo: studentRollNo,
+                },
+                data: {
+                    ...studentData,
+                },
+            });
 
-        resPayload.setSuccess("Student updated successfully", updateStudent);
-        console.log(resPayload, `-> response for ${funcName} controller`);
-        return res.status(200).json(resPayload);
+            await tx.outboxEvent.create({
+                data: {
+                    eventType: "student.created",
+                    payload: {
+                        rollNumber: updateStudent.rollNo,
+                        name: updateStudent.name,
+                    },
+                },
+            });
+
+            resPayload.setSuccess("Student updated successfully", updateStudent);
+            console.log(resPayload, `-> response for ${funcName} controller`);
+            return res.status(200).json(resPayload);
+        });
     } catch (err) {
         resPayload.setError("Internal server error");
         console.log(resPayload, `-> response for ${funcName} controller`);
