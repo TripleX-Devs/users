@@ -16,17 +16,18 @@ declare global {
 // This is necessary to make the file a module and avoid TypeScript errors
 export {};
 
-
 export const checkForAccessToken = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction,
 ) => {
-    const token = req.cookies.token;
-  
+    const authHeader = req.headers.authorization;
+    const token = authHeader && authHeader.split(' ')[1]; // Extract token from 'Bearer <token>'
+
     if (!token) {
         return res.status(401).json({ message: "Unauthorized" });
     }
+
     try {
         const isValidToken = await validateToken(token);
         if (isValidToken) {

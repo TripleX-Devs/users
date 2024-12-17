@@ -17,8 +17,16 @@ export type JWT = {
 
 export const createToken = (payload: JWT) => {
     const token = jwt.sign(payload, process.env.JWT_SECRET as string, {
-        expiresIn: "1d",
+        expiresIn: "15m",
     });
 
     return token;
 };
+
+export const createRefreshToken = (payload : JWT) =>
+{
+    const token = jwt.sign(payload , process.env.JWT_REFRESH_TOKEN as string , {
+        expiresIn : "7d"
+    })
+    return token;
+}

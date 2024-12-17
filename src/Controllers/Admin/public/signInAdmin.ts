@@ -2,7 +2,7 @@ import prismaClient from '@/config/db';
 import type express from 'express';
 
 import { comparePasswordFunction } from '@/Helpers/HashPassword';
-import { createToken, type JWT } from '@/Helpers/createTokens';
+import { createRefreshToken, createToken, type JWT } from '@/Helpers/createTokens';
 import ResponsePayload from '@/utils/resGenerator';
 
 const adminSignIn = async (
@@ -44,26 +44,27 @@ const adminSignIn = async (
                     universityEmail: adminData.universityEmail,
                 },
             };
-            const token = createToken(userAccessTokenPayload);
+            const accesstoken = createToken(userAccessTokenPayload);
+            const refreshToken = createRefreshToken(userAccessTokenPayload);
 
-            res.cookie('token', token, {
-                httpOnly: false,
-                secure: true,
-                sameSite: 'none',
-                maxAge: 1000 * 60 * 60 * 24,
-            });
+            res.cookie('refreshToken', refreshToken, {
+                httpOnly: true,       // Prevent access from JavaScript
+                secure: true,         // Use HTTPS in production
+                sameSite: 'strict',   // CSRF protection
+                maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+              });
 
-            res.cookie('role', 'admin', {
-                httpOnly: false,
-                secure: true,
-                sameSite: 'none',
-                maxAge: 1000 * 60 * 60 * 24,
-            });
+            // res.cookie('role', 'admin', {
+            //     httpOnly: false,
+            //     secure: true,
+            //     sameSite: 'none',
+            //     maxAge: 1000 * 60 * 60 * 24,
+            // });
 
             const resMessage = 'Admin signed in successfully';
             resPayload.setSuccess(resMessage, {
                 userId: adminData.id,
-                token: token,
+                accesstoken: accesstoken,
                 role: 'admin',
                 name: adminData.name,
                 universityEmail: adminData.universityEmail,
