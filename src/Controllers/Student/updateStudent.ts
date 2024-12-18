@@ -11,18 +11,8 @@ const updateStudent = async (
     const resPayload = new ResponsePayload();
     try {
         const studentUpdateData = req.body;
-        const token = req.cookies.token;
-
-        if (!token) {
-            throw new Error('Unauthorized');
-        }
-
-        const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
-            sub: string;
-            rollType: string;
-            userData: { name: string; universityEmail: string };
-        };
-        const rollNo=decoded.sub;
+       
+        const rollNo=req.user?.sub;
 
         if (!rollNo) {
             resPayload.setError("Student Roll Number is required");

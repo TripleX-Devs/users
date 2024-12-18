@@ -18,10 +18,12 @@ import adminTeacherRoutes from "@/Routes/Admin/TeacherAddRoutes";
 import teacherRoutes from "@/Routes/Teacher/TeacherRoutes";
 import studentRoutes from "@/Routes/Student/StudentRoutes";
 import adminStudentRoutes from "@/Routes/Admin/StudentAddRoutes";
+import refreshTokenRoute from '@/Routes/refreshTokenRoute'
 
 import { errorMiddleware } from "@/middlewares/errorHandling";
 import cookieParser from "cookie-parser";
 import { startWorker, stopWorker } from "./worker";
+
 // middlewares
 
 app.use(express.json());
@@ -50,6 +52,10 @@ app.use("/api/v1/teacher", teacherRoutes);
 
 // for student route
 app.use("/api/v1/student",studentRoutes );
+
+// for refresh token
+
+app.use('/refresh',refreshTokenRoute);
 
 app.use(errorMiddleware);
 app.listen(PORT, () => {

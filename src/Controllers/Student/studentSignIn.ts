@@ -2,7 +2,7 @@ import prismaClient from "@/config/db";
 import type express from "express";
 
 import { comparePasswordFunction } from "@/Helpers/HashPassword";
-import { createToken, type JWT } from "@/Helpers/createTokens";
+import { createRefreshToken, createToken, type JWT } from "@/Helpers/createTokens";
 import ResponsePayload from '@/utils/resGenerator';
 
 
@@ -44,27 +44,29 @@ const studentSignIn = async (
                     universityEmail: studentData.universityEmail,
                 },
             };
-            const token = createToken(userAccessTokenPayload);
+            const accesstoken = createToken(userAccessTokenPayload);
+            const refreshToken = createRefreshToken(userAccessTokenPayload);
 
-            res.cookie("token", token, {
-                httpOnly: false,
+
+            res.cookie("refreshToken", refreshToken, {
+                httpOnly: true,
                 secure: true,
-                sameSite: "none",
-                maxAge: 1000 * 60 * 60 * 24,
+                sameSite: 'strict',   // CSRF protection
+                maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
             });
-            res.cookie("role", "student",{  
-                httpOnly: false,
-                secure: true,
-                sameSite: "none",
-                maxAge: 1000 * 60 * 60 * 24,
+            // res.cookie("role", "student",{  
+            //     httpOnly: false,
+            //     secure: true,
+            //     sameSite: "none",
+            //     maxAge: 1000 * 60 * 60 * 24,
 
-            })
+            // })
 
 
             const resMessage = 'Student signed in successfully';
             resPayload.setSuccess(resMessage, {
                 userId: studentData.rollNo,
-                token: token,
+                accesstoken: accesstoken,
                 role: 'student',
                 name: studentData.name,
                 universityEmail: studentData.universityEmail,
