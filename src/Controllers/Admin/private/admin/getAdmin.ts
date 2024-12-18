@@ -11,17 +11,11 @@ const getAdminDetails = async (
     const resPayload = new ResponsePayload();
     try {
        
-        const token = req.cookies.token;
-        if (!token) {
-            throw new Error("Unauthorized");
-        }
-
-        const decoded=jwt.verify(token,process.env.JWT_SECRET as string) as { sub: string; rollType: string; userData: { name: string; universityEmail: string } };
-        const adminId = decoded.sub;
+        const id = req.user?.sub
 
         const adminData = await prismaClient.admin.findUnique({
             where: {
-                id: adminId,
+                id: id,
             },
         });
 

@@ -11,19 +11,10 @@ const getStudentDetails = async (
 ) => {
     const resPayload = new ResponsePayload();
     try {
-        const token = req.cookies.token;
+       
 
-        if (!token) {
-            throw new Error('Unauthorized');
-        }
-
-        const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
-            sub: string;
-            rollType: string;
-            userData: { name: string; universityEmail: string };
-        };
-
-        const rollNumber = decoded.sub;
+        const rollNumber=req.user?.sub;
+      
 
         const studentData = await prismaClient.student.findUnique({
             where: {
